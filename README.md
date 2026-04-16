@@ -60,6 +60,7 @@ Nodos utilizados:
 
 6. Diagrama de flujo
 
+<img width="1024" height="1536" alt="node-red diagrama" src="https://github.com/user-attachments/assets/be6206be-4d8f-4162-b805-4dc8b123bd63" />
 
 
 7. Resultados
