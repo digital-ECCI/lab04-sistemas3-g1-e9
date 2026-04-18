@@ -68,6 +68,10 @@ Nodos utilizados:
 - Flujo funcional creado
 - Ejecución automática configurada
 
+  
+
+
+
         function colorNameToHex(name) {
             const colores = {
                 'rojo': '#ff0000',
