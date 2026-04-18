@@ -68,8 +68,109 @@ Nodos utilizados:
 - Flujo funcional creado
 - Ejecución automática configurada
 
+function colorNameToHex(name) {
+    const colores = {
+        'rojo': '#ff0000',
+        'verde': '#00ff00',
+        'azul': '#0000ff',
+        'amarillo': '#ffff00',
+        'cyan': '#00ffff',
+        'magenta': '#ff00ff',
+        'blanco': '#ffffff',
+        'negro': '#000000',
+        'gris': '#808080',
+        'naranja': '#ffa500',
+        'morado': '#800080',
+        'rosa': '#ffc0cb',
+        'marron': '#a52a2a',
+        'celeste': '#87ceeb',
+        'violeta': '#ee82ee',
+        'turquesa': '#40e0d0',
+        'dorado': '#ffd700',
+        'plateado': '#c0c0c0'
+    };
+    return colores[name.toLowerCase()] || null;
+}
 
-<!-- Incluir diagramas y adjuntar al repositorio, en una carpeta src, el flujo que crearon -->
+// Función para convertir color string a HEX
+function rgbStringToHex(rgbString) {
+    var match = rgbString.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    if (match) {
+        var r = parseInt(match[1]);
+        var g = parseInt(match[2]);
+        var b = parseInt(match[3]);
+        return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+    return null;
+}
+
+// Función para convertir HEX a color
+function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    return { r: r, g: g, b: b };
+}
+
+// Obtener el valor de entrada
+var inputValue = msg.payload;
+var colorHex = null;
+var fuente = 'desconocida';
+
+if (typeof inputValue === 'string') {
+    if (inputValue.startsWith('#')) {
+        colorHex = inputValue;
+        fuente = 'hexadecimal';
+    }
+    else {
+        var nombreColor = colorNameToHex(inputValue);
+        if (nombreColor) {
+            colorHex = nombreColor;
+            fuente = 'nombre_color';
+        }
+        else if (inputValue.includes('rgb(')) {
+            var rgbHex = rgbStringToHex(inputValue);
+            if (rgbHex) {
+                colorHex = rgbHex;
+                fuente = 'rgb_string';
+            }
+        }
+    }
+}
+else if (typeof inputValue === 'object' && inputValue.hex) {
+    colorHex = inputValue.hex;
+    fuente = 'selector_color';
+}
+else if (typeof inputValue === 'string' && inputValue.length === 7 && inputValue.startsWith('#')) {
+    colorHex = inputValue;
+    fuente = 'selector_color';
+}
+
+if (colorHex && colorHex.startsWith('#')) {
+    var rgb = hexToRgb(colorHex);
+    
+    // Crear mensaje de salida
+    msg.payload = {
+        hex: colorHex,
+        red: rgb.r,
+        green: rgb.g,
+        blue: rgb.b,
+        rgb_string: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+        fuente: fuente,
+        entrada_original: inputValue,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Mostrar en consola para debugging
+    node.warn(`Color procesado: ${colorHex} (${fuente})`);
+    
+    return msg;
+} else {
+    // Si no se pudo procesar, mostrar error
+    node.warn(`No se pudo procesar: "${inputValue}"`);
+    return null;
+}<!-- Incluir diagramas y adjuntar al repositorio, en una carpeta src, el flujo que crearon -->
 
 
 ## Conclusiones
