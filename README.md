@@ -69,8 +69,7 @@ Nodos utilizados:
 - Ejecución automática configurada
 
   
-<img src="flujo.jpg" width="600">
-
+<img src="flujo.jfif" width="600">
 
         function colorNameToHex(name) {
             const colores = {
