@@ -5,8 +5,14 @@
 ## Integrantes
 
 sebastian organista 
+
+
 edwar carrero 
+
+
 yesid alfonso
+
+
 
 ## Documentación
 
