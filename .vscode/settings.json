@@ -1,0 +1,85 @@
+[
+  {
+    "id": "tab1",
+    "type": "tab",
+    "label": "Flujo Color",
+    "disabled": false,
+    "info": ""
+  },
+  {
+    "id": "color1",
+    "type": "ui_colour_picker",
+    "z": "tab1",
+    "name": "Seleccionar Color",
+    "label": "Color",
+    "group": "group1",
+    "format": "hex",
+    "outformat": "string",
+    "x": 150,
+    "y": 100,
+    "wires": [["function1"]]
+  },
+  {
+    "id": "text1",
+    "type": "ui_text_input",
+    "z": "tab1",
+    "name": "Ingresar Texto",
+    "label": "Texto",
+    "group": "group1",
+    "x": 150,
+    "y": 160,
+    "wires": [["function1"]]
+  },
+  {
+    "id": "function1",
+    "type": "function",
+    "z": "tab1",
+    "name": "Procesar Datos",
+    "func": "msg.payload = \"Color: \" + (msg.color || msg.payload) + \" | Texto: \" + (msg.payload);\nreturn msg;",
+    "outputs": 1,
+    "x": 350,
+    "y": 130,
+    "wires": [["file1", "debug1"]]
+  },
+  {
+    "id": "file1",
+    "type": "file",
+    "z": "tab1",
+    "name": "Guardar Archivo",
+    "filename": "/home/pi/datos.txt",
+    "appendNewline": true,
+    "createDir": true,
+    "overwriteFile": "false",
+    "x": 550,
+    "y": 100,
+    "wires": []
+  },
+  {
+    "id": "debug1",
+    "type": "debug",
+    "z": "tab1",
+    "name": "Mostrar Debug",
+    "active": true,
+    "tosidebar": true,
+    "complete": "payload",
+    "x": 550,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "group1",
+    "type": "ui_group",
+    "name": "Grupo",
+    "tab": "ui_tab1",
+    "order": 1,
+    "disp": true,
+    "width": "6"
+  },
+  {
+    "id": "ui_tab1",
+    "type": "ui_tab",
+    "name": "Dashboard",
+    "icon": "dashboard",
+    "order": 1
+  }
+]
